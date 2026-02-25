@@ -47,6 +47,17 @@ public class LibraryController {
         libraryService.addBook(book);
         logger.info("New book added");
         return new ResponseEntity<>(book, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/books/{id}")
+    public ResponseEntity<Book> updateBookById(@PathVariable Long id, @RequestBody Book updateBook) {
+        if(!libraryService.getBookById(id).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        updateBook.setId(id);
+        libraryService.updateBook(updateBook);
+        logger.info("Book updated" + updateBook);
+        return new ResponseEntity<>(updateBook, HttpStatus.OK);
 
     }
 }
