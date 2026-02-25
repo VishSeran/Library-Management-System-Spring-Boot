@@ -16,7 +16,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class LibraryController {
-
     //create a logger instance
     private static final Logger logger = LoggerFactory.getLogger(LibraryController.class);
 
@@ -58,6 +57,17 @@ public class LibraryController {
         libraryService.updateBook(updateBook);
         logger.info("Book updated" + updateBook);
         return new ResponseEntity<>(updateBook, HttpStatus.OK);
-
     }
+
+    @DeleteMapping("books/{id}")
+    public ResponseEntity<Book> bookDeleteById (@PathVariable Long id) {
+        if(!libraryService.getBookById(id).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        libraryService.deleteBookById(id);
+        logger.info("Book has been deleted" );
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
 }
