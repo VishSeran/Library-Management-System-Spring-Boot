@@ -106,7 +106,22 @@ public class LibraryService {
         //when borrow a book then that book needs to remove from booklist
         Book borrowedBook = borrowingRecord.getBook();
         borrowedBook.setAvailableCopies(borrowedBook.getAvailableCopies()-1);
+    }
 
+    // Return a book (update the borrowing record with the return date)
+    public void returnBook (BorrowingRecord updatedborrowingRecord) {
+        updatedborrowingRecord.setReturnDate(LocalDate.now());
+        for( int i =0; i< borrowingRecordList.size(); i++) {
+            BorrowingRecord borrowingRecord = borrowingRecordList.get(i);
+            if(borrowingRecord.getId().equals(updatedborrowingRecord.getId())){
+                borrowingRecordList.set(i, updatedborrowingRecord);
+                break;
+            }
+        }
+
+        // now increase the number of copies of the book
+        Book returnedBook = updatedborrowingRecord.getBook();
+        returnedBook.setAvailableCopies(returnedBook.getAvailableCopies() + 1);
     }
 
 }
