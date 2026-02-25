@@ -5,8 +5,10 @@ import com.vish.librarymanagement.model.BorrowingRecord;
 import com.vish.librarymanagement.model.Member;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Array;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -87,6 +89,24 @@ public class LibraryService {
         membersList.removeIf(member -> member.getId().equals(id));
     }
 
+    // ==================== BorrowingRecord Methods ====================
 
+    //Get all borrow records
+    public ArrayList<BorrowingRecord> getAllBorrowRecords() {
+        return borrowingRecordList;
+    }
+
+    // borrow a book (create a new borrow record)
+    public void borrowBook (BorrowingRecord borrowingRecord) {
+
+        borrowingRecord.setBorrowDate(LocalDate.now());
+        borrowingRecord.setDueDate(LocalDate.now().plusDays(14));
+        borrowingRecordList.add(borrowingRecord);
+
+        //when borrow a book then that book needs to remove from booklist
+        Book borrowedBook = borrowingRecord.getBook();
+        borrowedBook.setAvailableCopies(borrowedBook.getAvailableCopies()-1);
+
+    }
 
 }
