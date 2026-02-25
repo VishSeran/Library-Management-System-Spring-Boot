@@ -9,7 +9,7 @@ public class Member {
 
     private String name;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private LocalDate membershipStartDate;
     private LocalDate membershipEndDate;
 
@@ -17,7 +17,7 @@ public class Member {
     public Member (){}
 
     // Parameterized Constructor
-    public Member(String name,String email, int phoneNumber, LocalDate membershipStartDate, LocalDate membershipEndDate) {
+    public Member(String name,String email, String phoneNumber, LocalDate membershipStartDate, LocalDate membershipEndDate) {
         this.name = name;
         this.email  = email;
         this.phoneNumber = phoneNumber;
@@ -27,11 +27,11 @@ public class Member {
 
     // Getters and Setters
     public Long getId() {
-        return id;
+        return memberId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.memberId = id;
     }
 
     public String getName() {
@@ -59,31 +59,31 @@ public class Member {
     }
 
     public LocalDate getStartDate() {
-        return startDate;
+        return membershipStartDate;
     }
 
     public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+        this.membershipStartDate = startDate;
     }
 
     public LocalDate getEndDate() {
-        return endDate;
+        return membershipEndDate;
     }
 
     public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+        this.membershipEndDate = endDate;
     }
 
     // toString
     @Override
     public String toString() {
         return "Member{" +
-                "id=" + id +
+                "id=" + memberId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", membershipStartDate=" + startDate +
-                ", membershipEndDate=" + endDate +
+                ", membershipStartDate=" + membershipStartDate +
+                ", membershipEndDate=" + membershipEndDate +
                 '}';
     }
 
