@@ -1,12 +1,88 @@
 package com.vish.librarymanagement.model;
 
+import java.lang.classfile.instruction.StackInstruction;
+
 public class Book {
-    private long id;
+    private Long id;
 
     private String title;
     private String author;
     private int publicationYear;
     private String genre;
     private int availableCopies;
+
+    // Default Constructor
+    public Book (){
+    }
+
+    // Parameterized Constructor
+    public Book (String title, String author, int publicationYear, String genre,
+                 int availableCopies) {
+
+        this.title = title;
+        this.author = author;
+        this.publicationYear = publicationYear;
+        this.genre = genre;
+        this.availableCopies = availableCopies;
+    }
+    public Long getId(){
+        return  id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle () {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public void setAvailableCopies(int availableCopies) {
+        this.availableCopies = availableCopies;
+    }
+
+    // toString
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", genre='" + genre + '\'' +
+                ", availableCopies=" + availableCopies +
+                '}';
+    }
 
 }
