@@ -28,4 +28,26 @@ public class LibraryService {
         return booksList.stream().
                 filter(book -> book.getId().equals(id)).findFirst();
     }
+
+    //add a new book
+    public void addBook (Book book){
+        booksList.add(book);
+    }
+
+    //update a book
+    public void updateBook(Book updatedbook){
+        for (int i = 0; i< booksList.size(); i++){
+            Book book = booksList.get(i);
+            if(book.getId().equals(updatedbook.getId())){
+                booksList.set(i, updatedbook);
+                break;
+            }
+        }
+    }
+
+    //Delete a book by ID
+    public void deleteBookById(Long id){
+        booksList.removeIf(book -> book.getId().equals(id));
+    }
+
 }
