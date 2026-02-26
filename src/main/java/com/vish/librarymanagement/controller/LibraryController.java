@@ -1,6 +1,7 @@
 package com.vish.librarymanagement.controller;
 
 import com.vish.librarymanagement.model.Book;
+import com.vish.librarymanagement.model.Member;
 import com.vish.librarymanagement.services.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +68,25 @@ public class LibraryController {
         libraryService.deleteBookById(id);
         logger.info("Book has been deleted" );
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //===========member controller============================
+
+    @GetMapping("/members")
+    public ResponseEntity<ArrayList<Member>> getAllMembers() {
+        ArrayList<Member> membersList = libraryService.getAllMembers();
+        logger.info("All members fetched " + membersList );
+        return new ResponseEntity<>(membersList, HttpStatus.OK);
+    }
+
+    @GetMapping("/members/{id}")
+    public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
+        Optional<Member> member  = libraryService.getMemberById(id);
+        logger.info("Get member by id: " + id);
+
+        return member.map((value)-> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
     }
 
 
