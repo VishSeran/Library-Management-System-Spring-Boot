@@ -15,6 +15,7 @@ import javax.swing.text.html.Option;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 @RestController
@@ -72,6 +73,16 @@ public class LibraryController {
         logger.info("Book has been deleted" );
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    //get book by genre
+    @GetMapping("books/genre")
+    public ResponseEntity<Collection<Book>> getBooksByGenre (@RequestParam String genre) {
+        Collection<Book> books = libraryService.getBooksByGenre(genre);
+        logger.info("The books reterive for genre " +  genre);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+
+    }
+
 
     //===========member controller============================
 
