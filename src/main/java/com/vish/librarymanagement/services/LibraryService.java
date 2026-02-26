@@ -11,7 +11,9 @@ import java.lang.reflect.Array;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LibraryService {
@@ -53,6 +55,12 @@ public class LibraryService {
     //Delete a book by ID
     public void deleteBookById(Long id){
         booksList.removeIf(book -> book.getId().equals(id));
+    }
+
+    //get book by genre
+    public Collection<Book> getBookByGenre(String genre) {
+        Collection<Book> allBooks = booksList;
+        return booksList.stream().filter(book-> book.getGenre().equalsIgnoreCase(genre)).collect(Collectors.toList());
     }
 
     //=========Member CRUD======================
