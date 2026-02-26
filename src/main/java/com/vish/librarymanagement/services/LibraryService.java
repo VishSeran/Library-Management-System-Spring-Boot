@@ -9,17 +9,16 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Array;
 
+import java.security.cert.CollectionCertStoreParameters;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class LibraryService {
 
     private ArrayList<Book> booksList = new ArrayList<>();
+    //private HashMap<Long,Book> booksList   = new HashMap<>();
     private ArrayList<Member> membersList = new ArrayList<>();
     private ArrayList<BorrowingRecord> borrowingRecordList = new ArrayList<>();
 
@@ -84,6 +83,31 @@ public class LibraryService {
             }
         }
         return dueBooks;
+
+    }
+
+    public Optional<LocalDate> checkAvailability(Long bookId) {
+
+        Collection<Book> allBooks = booksList;
+        Book searchBook;
+        LocalDate dueDate;
+        for(Book book : allBooks){
+            if(book.getId().equals(bookId)){
+
+                if(book.getAvailableCopies() > 0){
+                    return Optional.of(LocalDate.now()) ;
+                }else{
+                      for(BorrowingRecord record : borrowingRecordList){
+                          if(record.getBookId().equals(book.getId())){
+                              return Optional.of(record.getDueDate());
+                          }
+                      }
+                    }
+                return Optional.empty();
+            }
+        }
+
+        return Optional.empty();
 
     }
 
