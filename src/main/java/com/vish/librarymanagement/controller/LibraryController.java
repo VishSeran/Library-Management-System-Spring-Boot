@@ -7,6 +7,7 @@ import com.vish.librarymanagement.services.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -88,6 +89,14 @@ public class LibraryController {
         Collection <Book> allBooks = libraryService.getBooksByAuthorAndGenre(author, genre);
         logger.info("The books retrieved for the author and genre "+author+" - " + genre);
         return new ResponseEntity<>(allBooks,HttpStatus.OK);
+    }
+
+    @GetMapping("books/dueondate")
+    public ResponseEntity<Collection<Book>> getBooksByDueDate(@RequestParam("dueDate") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dueDate){
+        Collection<Book> allBooks = libraryService.getBooksByDueDate(dueDate);
+        logger.info("The books retrieved by due date "+dueDate);
+        return new ResponseEntity<>(allBooks,HttpStatus.OK);
+
     }
 
 
