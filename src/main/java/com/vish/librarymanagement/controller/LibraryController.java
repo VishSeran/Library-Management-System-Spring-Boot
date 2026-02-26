@@ -92,11 +92,13 @@ public class LibraryController {
     }
 
     //add member
-    @PutMapping("/members/addMember")
+    @PostMapping("/members/addMember")
     public ResponseEntity<Member> addMember(@RequestBody Member newMember){
         libraryService.addMember(newMember);
         logger.info("New member added");
         return  new ResponseEntity<>(newMember, HttpStatus.CREATED);
     }
+
+    @
 
 }
