@@ -72,6 +72,7 @@ public class LibraryController {
 
     //===========member controller============================
 
+    //get all members
     @GetMapping("/members")
     public ResponseEntity<ArrayList<Member>> getAllMembers() {
         ArrayList<Member> membersList = libraryService.getAllMembers();
@@ -79,6 +80,7 @@ public class LibraryController {
         return new ResponseEntity<>(membersList, HttpStatus.OK);
     }
 
+    //get member by id
     @GetMapping("/members/{id}")
     public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
         Optional<Member> member  = libraryService.getMemberById(id);
@@ -89,5 +91,12 @@ public class LibraryController {
 
     }
 
+    //add member
+    @PutMapping("/members/addMember")
+    public ResponseEntity<Member> addMember(@RequestBody Member newMember){
+        libraryService.addMember(newMember);
+        logger.info("New member added");
+        return  new ResponseEntity<>(newMember, HttpStatus.CREATED);
+    }
 
 }
