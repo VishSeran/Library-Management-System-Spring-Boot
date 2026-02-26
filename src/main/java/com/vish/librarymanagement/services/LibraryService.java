@@ -3,6 +3,7 @@ package com.vish.librarymanagement.services;
 import com.vish.librarymanagement.model.Book;
 import com.vish.librarymanagement.model.BorrowingRecord;
 import com.vish.librarymanagement.model.Member;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.AnnotatedElement;
@@ -96,6 +97,13 @@ public class LibraryService {
         return borrowingRecordList;
     }
 
+    //get record by Id
+    public Optional<BorrowingRecord> getRecordById(Long id){
+
+        return borrowingRecordList.stream().filter(record -> record.getId().equals(id)).
+                findFirst();
+    }
+
     // borrow a book (create a new borrow record)
     public void borrowBook (BorrowingRecord borrowingRecord) {
 
@@ -109,19 +117,19 @@ public class LibraryService {
     }
 
     // Return a book (update the borrowing record with the return date)
-    public void returnBook (BorrowingRecord updatedborrowingRecord) {
-        updatedborrowingRecord.setReturnDate(LocalDate.now());
-        for( int i =0; i< borrowingRecordList.size(); i++) {
-            BorrowingRecord borrowingRecord = borrowingRecordList.get(i);
-            if(borrowingRecord.getId().equals(updatedborrowingRecord.getId())){
-                borrowingRecordList.set(i, updatedborrowingRecord);
-                break;
+    public void returnBook (Long recordId, LocalDate returnDate) {
+
+        for( BorrowingRecord borrow : borrowingRecordList){
+            if(borrow.getId().equals(recordId)){
+                borrow.setReturnDate(returnDate);
+
+                // now increase the number of copies of the book
+                Book returnedBook = borrow.getBook();
+                returnedBook.setAvailableCopies(returnedBook.getAvailableCopies() + 1);
             }
         }
 
-        // now increase the number of copies of the book
-        Book returnedBook = updatedborrowingRecord.getBook();
-        returnedBook.setAvailableCopies(returnedBook.getAvailableCopies() + 1);
+
     }
 
 }

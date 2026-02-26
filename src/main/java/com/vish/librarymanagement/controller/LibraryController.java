@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -143,11 +144,25 @@ public class LibraryController {
 
     //borrow a book
     @PostMapping("/borrowingRecords/addRecord")
-    public ResponseEntity<BorrowingRecord> addRecod (@RequestBody BorrowingRecord newRecord) {
+    public ResponseEntity<BorrowingRecord> borrowBook (@RequestBody BorrowingRecord newRecord) {
 
         libraryService.borrowBook(newRecord);
         logger.info("new borrow record created");
         return new ResponseEntity<>(newRecord, HttpStatus.CREATED);
+    }
+
+    @PutMapping ("/borrowingRecords/{id}")
+    public ResponseEntity<BorrowingRecord> returnBook (@PathVariable Long id) {
+
+        if(!libraryService.getRecordById(id).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        libraryService.returnBook(id, LocalDate.now());
+        logger.info("Book returned has been updated");
+        return new ResponseEntity<>(HttpStatus.OK);
+
+
     }
 
 
