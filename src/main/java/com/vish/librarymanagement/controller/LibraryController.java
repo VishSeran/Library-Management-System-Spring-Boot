@@ -1,6 +1,7 @@
 package com.vish.librarymanagement.controller;
 
 import com.vish.librarymanagement.model.Book;
+import com.vish.librarymanagement.model.BorrowingRecord;
 import com.vish.librarymanagement.model.Member;
 import com.vish.librarymanagement.services.LibraryService;
 import org.slf4j.Logger;
@@ -128,5 +129,27 @@ public class LibraryController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+    // Borrowing Book Controller
+
+    //get all borrowing  records
+    @GetMapping("/borrowingRecords")
+    public ResponseEntity<ArrayList<BorrowingRecord>> getAllBorrowingRecords() {
+        ArrayList<BorrowingRecord> records = libraryService.getAllBorrowRecords();
+        logger.info("all borrowing records fetched");
+        return new ResponseEntity<>(records, HttpStatus.OK);
+    }
+
+    //borrow a book
+    @PostMapping("/borrowingRecords/addRecord")
+    public ResponseEntity<BorrowingRecord> addRecod (@RequestBody BorrowingRecord newRecord) {
+
+        libraryService.borrowBook(newRecord);
+        logger.info("new borrow record created");
+        return new ResponseEntity<>(newRecord, HttpStatus.CREATED);
+    }
+
+
 
 }
