@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -99,6 +100,19 @@ public class LibraryController {
         return  new ResponseEntity<>(newMember, HttpStatus.CREATED);
     }
 
-    @
+    //update a member
+    @PutMapping("/members/{id}")
+    public ResponseEntity<Member> updateMemberById(@PathVariable Long id, @RequestBody Member updateMember) {
+
+        if(!libraryService.getMemberById(id).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        updateMember.setId(id);
+        libraryService.updateMember(updateMember);
+        logger.info("Member has been updated" + updateMember);
+        return new ResponseEntity<>(updateMember, HttpStatus.OK);
+
+    }
 
 }
