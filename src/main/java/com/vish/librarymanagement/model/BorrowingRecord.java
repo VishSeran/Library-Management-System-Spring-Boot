@@ -1,11 +1,19 @@
 package com.vish.librarymanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.sound.midi.MetaMessage;
 import java.time.LocalDate;
 
 public class BorrowingRecord {
 
     private Long id;
+
+    @JsonProperty("bookId")
+    private Long bookId;
+
+    @JsonProperty("memberId")
+    private Long memberId;
 
     private Book book;
     private Member member;
@@ -36,6 +44,22 @@ public class BorrowingRecord {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getBookId () {
+        return bookId;
+    }
+
+    public void setBookId(Long bookId){
+        this.bookId = bookId;
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public void setMember(Long memberId) {
+        this.memberId = memberId;
     }
 
     public Book getBook() {

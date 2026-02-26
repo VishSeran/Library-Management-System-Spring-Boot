@@ -59,16 +59,32 @@ public class LibraryService {
     }
 
     //get book by genre
-    public Collection<Book> getBookByGenre(String genre) {
+    public Collection<Book> getBooksByGenre(String genre) {
         Collection<Book> allBooks = booksList;
         return allBooks.stream().filter(book-> book.getGenre().equalsIgnoreCase(genre)).collect(Collectors.toList());
     }
 
     //filter by author and optional filter by genre
-    public Collection<Book> getBookByAuthorAndGenre(String author, String genre) {
+    public Collection<Book> getBooksByAuthorAndGenre(String author, String genre) {
         Collection<Book> allBooks = booksList;
         return allBooks.stream().filter(book->book.getAuthor().equalsIgnoreCase(author)).
                 filter(book  ->book.getGenre().equalsIgnoreCase(genre)).collect(Collectors.toList());
+    }
+
+    public Collection<Book> getBooksByDueDate (LocalDate dueDate) {
+        ArrayList<Book> dueBooks =  new ArrayList<>();
+        Collection <BorrowingRecord> allRecords = borrowingRecordList;
+        Collection<BorrowingRecord> filterdRecords =  allRecords.stream().filter(borrowingRecord -> borrowingRecord.getDueDate().equals(dueDate))
+                .toList();
+
+        for (BorrowingRecord record : filterdRecords) {
+            Book book = booksList.get(Math.toIntExact(record.getBookId()));
+            if(book != null){
+                dueBooks.add(book);
+            }
+        }
+        return dueBooks;
+
     }
 
     //=========Member CRUD======================
