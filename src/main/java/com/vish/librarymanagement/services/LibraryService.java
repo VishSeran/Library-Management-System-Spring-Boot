@@ -12,6 +12,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,7 +61,14 @@ public class LibraryService {
     //get book by genre
     public Collection<Book> getBookByGenre(String genre) {
         Collection<Book> allBooks = booksList;
-        return booksList.stream().filter(book-> book.getGenre().equalsIgnoreCase(genre)).collect(Collectors.toList());
+        return allBooks.stream().filter(book-> book.getGenre().equalsIgnoreCase(genre)).collect(Collectors.toList());
+    }
+
+    //filter by author and optional filter by genre
+    public Collection<Book> getBookByAuthorAndGenre(String author, String genre) {
+        Collection<Book> allBooks = booksList;
+        return allBooks.stream().filter(book->book.getAuthor().equalsIgnoreCase(author)).
+                filter(book  ->book.getGenre().equalsIgnoreCase(genre)).collect(Collectors.toList());
     }
 
     //=========Member CRUD======================
