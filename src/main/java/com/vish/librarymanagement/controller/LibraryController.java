@@ -83,6 +83,13 @@ public class LibraryController {
 
     }
 
+    @GetMapping("/books/author/{author}")
+    public ResponseEntity<Collection<Book>> getBooksByAuthorAndGenre (@PathVariable String author , @RequestParam (required = false) String genre) {
+        Collection <Book> allBooks = libraryService.getBooksByAuthorAndGenre(author, genre);
+        logger.info("The books retrieved for the author and genre "+author+" - " + genre);
+        return new ResponseEntity<>(allBooks,HttpStatus.OK);
+    }
+
 
     //===========member controller============================
 
