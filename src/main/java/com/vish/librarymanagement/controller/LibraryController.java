@@ -1,5 +1,6 @@
 package com.vish.librarymanagement.controller;
 
+import com.sun.jdi.ObjectCollectedException;
 import com.vish.librarymanagement.model.Book;
 import com.vish.librarymanagement.model.BorrowingRecord;
 import com.vish.librarymanagement.model.Member;
@@ -97,6 +98,17 @@ public class LibraryController {
         logger.info("The books retrieved by due date "+dueDate);
         return new ResponseEntity<>(allBooks,HttpStatus.OK);
 
+    }
+
+    @GetMapping("/books/bookavailabileDate")
+    public ResponseEntity<Optional<LocalDate>> checkAvailability (@RequestParam Long id) {
+        Optional<LocalDate> avaiableDate = libraryService.checkAvailability(id);
+        logger.info("Availability checked " + avaiableDtae);
+        if(avaiableDate == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(avaiableDate, HttpStatus.OK);
+        }
     }
 
 
