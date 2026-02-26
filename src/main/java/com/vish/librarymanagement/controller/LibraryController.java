@@ -115,4 +115,18 @@ public class LibraryController {
 
     }
 
+    //delete member
+    @DeleteMapping("/members/{id}")
+    public ResponseEntity<Member> deleteMemberById(@PathVariable Long id){
+
+        if(!libraryService.getMemberById(id).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        libraryService.deleteMember(id);
+        logger.info("Member has been deleted ");
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
