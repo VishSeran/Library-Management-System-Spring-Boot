@@ -103,7 +103,7 @@ public class LibraryController {
     @GetMapping("/books/bookavailabileDate")
     public ResponseEntity<Optional<LocalDate>> checkAvailability (@RequestParam Long id) {
         Optional<LocalDate> avaiableDate = libraryService.checkAvailability(id);
-        logger.info("Availability checked " + avaiableDtae);
+        logger.info("Availability checked " + avaiableDate);
         if(avaiableDate == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else{
